@@ -7,10 +7,10 @@ describe Atm do
 
     before do
         # before each test we need to add an attribute of 'balance'
-        # to the 'account' object abd set the vakye ti '100'
+        # to the 'account' object and set the value to '100'
         allow(account).to receive(:balance).and_return(100)
 
-        # we also need to allow the fake 'account' to recieve new
+        # we also need to allow the fake 'account' to receive new
         # balance using a setter method 'balance='
         allow(account).to receive(:balance=)
     end
@@ -49,5 +49,17 @@ describe Atm do
         # in order to be able to clear the transaction.
         expect(subject.withdraw(45, account)).to eq expected_output
     end
+
+    # sad path
+    it 'is expected to reject a withdrawal if account has insufficient funds' do
+        expected_output = {
+            status: false,
+            message: 'insufficient funds',
+            date: Date.today
+        }
+        # trying to withdraw 105 from my account that has only 100
+        expect(subject.withdraw(105, account)).to eq expected_output
+    end
+
 end
 
