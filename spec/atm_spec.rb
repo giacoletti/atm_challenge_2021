@@ -20,12 +20,12 @@ describe Atm do
     end
     
     it 'is expected to reduce funds on withdraw' do
-        subject.withdraw 50
+        subject.withdraw 50, account
         expect(subject.funds).to eq 950
     end
     
     it 'is expected to reduce withdraw' do
-        expect { subject.withdraw 50 }
+        expect { subject.withdraw 50, account }
         .to change {subject.funds }.from(1000).to(950)
     end
 
