@@ -7,7 +7,7 @@ class Atm
 
     # note that we will also change 'value' to 'amount'
     # it is a better name for our domain
-    def withdraw(amount, account)
+    def withdraw(amount, pin_code, account)
         # We will be using Ruby's 
         # `case` - `when` - `then` flow control statement
         # and check if there is enough funds in the account
@@ -26,6 +26,8 @@ class Atm
                 message: 'insufficient funds in ATM',
                 date: Date.today
             }
+        when incorrect_pin?(pin_code, account.pin_code)
+            { status: false, message: 'wrong pin', date: Date.today }
         else
             # if it's not, we preform the transaction
             perform_transaction(amount,account)
@@ -54,5 +56,9 @@ class Atm
             date: Date.today,
             amount: amount
         }
+    end
+
+    def incorrect_pin?(pin_code, actual_pin)
+        pin_code != actual_pin
     end
 end

@@ -3,7 +3,7 @@ require './lib/atm.rb'
 describe Atm do
     subject { Atm.new } 
 
-    let(:account) {instance_double('Account')}
+    let(:account) {instance_double('Account', pin_code: '1234' ) }
 
     before do
         # before each test we need to add an attribute of 'balance'
@@ -20,12 +20,12 @@ describe Atm do
     end
     
     it 'is expected to reduce funds on withdraw' do
-        subject.withdraw 50, account
+        subject.withdraw 50, '1234', account
         expect(subject.funds).to eq 950
     end
     
     it 'is expected to reduce withdraw' do
-        expect { subject.withdraw 50, account }
+        expect { subject.withdraw 50, '1234', account }
         .to change {subject.funds }.from(1000).to(950)
     end
 
@@ -47,7 +47,7 @@ describe Atm do
         # The reason we pass in the 'account' object is that the Atm needs
         # to be able to access information about the 'accounts' balance
         # in order to be able to clear the transaction.
-        expect(subject.withdraw(45, account)).to eq expected_output
+        expect(subject.withdraw(45, '1234', account)).to eq expected_output
     end
 
     # sad path
@@ -58,7 +58,7 @@ describe Atm do
             date: Date.today
         }
         # trying to withdraw 105 from my account that has only 100
-        expect(subject.withdraw(105, account)).to eq expected_output
+        expect(subject.withdraw(105, '1234', account)).to eq expected_output
     end
 
     it 'is expected to reject withdraw if ATM has insufficient funds' do
@@ -70,7 +70,12 @@ describe Atm do
             message: 'insufficient funds in ATM', 
             date: Date.today 
         }
-        expect(subject.withdraw(100, account)).to eq expected_output
+        expect(subject.withdraw(100, '1234', account)).to eq expected_output
+    end
+
+    it 'reject withdraw if the pin is wrong' do
+        expected_output = { status: false, message: 'wrong pin', date: Date.today }
+        expect(subject.withdraw(50, 9999, account)).to eq expected_output
     end
 
 end
