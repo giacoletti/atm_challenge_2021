@@ -31,6 +31,9 @@ class Atm
 
         when card_expired?(account.exp_date)
             { status: false, message: 'card expired', date: Date.today }
+            #Mlj
+        when account_deactivated?(account.account_status)
+            { status: false, message: 'account disabled', date: Date.today }
 
         else
             # if it's not, we preform the transaction
@@ -68,5 +71,9 @@ class Atm
 
     def card_expired?(exp_date)
         Date.strptime(exp_date, '%m/%y') < Date.today
+    end
+
+    def account_deactivated?(account_status)
+        account_status == :disabled
     end
 end
