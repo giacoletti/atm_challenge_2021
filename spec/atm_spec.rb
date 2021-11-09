@@ -3,7 +3,7 @@ require './lib/atm.rb'
 describe Atm do
     subject { Atm.new } 
 
-    let(:account) {instance_double('Account', pin_code: '1234' ) }
+    let(:account) {instance_double('Account', pin_code: '1234', exp_date: '04/17') }
 
     before do
         # before each test we need to add an attribute of 'balance'
@@ -76,6 +76,12 @@ describe Atm do
     it 'reject withdraw if the pin is wrong' do
         expected_output = { status: false, message: 'wrong pin', date: Date.today }
         expect(subject.withdraw(50, 9999, account)).to eq expected_output
+    end
+
+    it 'reject withdraw if the card is expired' do
+        allow(account).to receive(:exp_date).and_return('12/15')
+        expected_output = { status: false, message: 'card', date: Date.today }
+        expect(subject.withdraw(6, '1234', account)).to eq expected_output
     end
 
 end
