@@ -14,13 +14,17 @@ class Person
     end
 
     def deposit(amount)
-        deposit_amount(amount)
+        @account == nil ? missing_account : deposit_amount(amount)
     end
 
     private
 
     def missing_name
         raise 'A name is required'
+    end
+
+    def missing_account
+        raise 'No account present'
     end
 
     def deposit_amount(amount)
