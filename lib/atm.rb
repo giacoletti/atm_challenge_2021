@@ -41,7 +41,7 @@ class Atm
         end
     end
 
-    private
+    private 
 
     def insufficient_funds_in_account?(amount, account)
         amount > account.balance
@@ -75,7 +75,7 @@ class Atm
     end
 
     def account_deactivated?(account_status)
-        account_status == :disabled
+        account_status == :deactivated
     end
 
     def add_bills(amount)

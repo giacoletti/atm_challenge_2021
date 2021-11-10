@@ -95,7 +95,7 @@ describe Atm do
     end
 
     it 'is expected to reject if account is disabled' do
-        allow(account).to receive(:account_status).and_return(:disabled)
+        allow(account).to receive(:account_status).and_return(:deactivated)
         expected_output = { 
             status: false, 
             message: 'account disabled',
