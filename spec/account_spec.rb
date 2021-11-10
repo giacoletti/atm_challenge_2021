@@ -3,8 +3,7 @@ require './lib/account.rb'
 describe Account do
     subject { Account.new }
     
-    #let(:atm) {instance_double('Atm', funds: 1000 )}
-    let(:person) {instance_double('Person', name: 'Giovanni')}
+    let(:person) { instance_double('Person', name: 'Giovanni') }
     subject { described_class.new({owner: person}) }
 
     it 'is expected to have 4 digits for pin_code' do
@@ -37,4 +36,3 @@ describe Account do
     end
    
 end
-

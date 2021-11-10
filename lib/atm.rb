@@ -89,5 +89,5 @@ class Atm
         end
         bills
     end
-end
 
+end
