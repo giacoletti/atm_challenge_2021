@@ -31,7 +31,7 @@ class Atm
 
         when card_expired?(account.exp_date)
             { status: false, message: 'card expired', date: Date.today }
-            #Mlj
+            
         when account_deactivated?(account.account_status)
             { status: false, message: 'account disabled', date: Date.today }
 
@@ -61,7 +61,8 @@ class Atm
             status: true,
             message: 'success',
             date: Date.today,
-            amount: amount
+            amount: amount,
+            bills: add_bills(amount) 
         }
     end
 
@@ -76,4 +77,17 @@ class Atm
     def account_deactivated?(account_status)
         account_status == :disabled
     end
+
+    def add_bills(amount)
+        denominations = [20, 10, 5]
+        bills = []
+        denominations.each do |bill|
+            while amount - bill >= 0
+                amount -= bill
+                bills << bill
+            end
+        end
+        bills
+    end
 end
+

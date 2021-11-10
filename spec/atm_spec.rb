@@ -39,7 +39,8 @@ describe Atm do
             status: true,
             message: 'success',
             date: Date.today,
-            amount: 45
+            amount: 45,
+            bills: [20, 20, 5]
         }
 
         # We need to pass in two arguments to the 'withdraw' mwthiod.
@@ -49,6 +50,7 @@ describe Atm do
         # in order to be able to clear the transaction.
         expect(subject.withdraw(45, '1234', account)).to eq expected_output
     end
+
 
     # sad path
     it 'is expected to reject a withdrawal if account has insufficient funds' do
