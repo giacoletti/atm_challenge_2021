@@ -51,12 +51,20 @@ describe Person do
         end
 
         it 'is expected to add funds to the account balance - deducted from cash' do
+            # As a person depositing cash is suposed to have the cash availible
+            # The bank account is suposed to obtain that money on the balance 
+            # and at the same time, be removed from the person's access to cash
             subject.cash = 100
             expect(subject.cash).to eq 100
             subject.deposit(100)
             expect(subject.account.balance).to eq 100
             expect(subject.cash).to eq 0
 
+        end
+
+        it 'is expected to be able to withdraw funds' do
+            testing = lambda { subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm) }
+            expect(testing.call).to be_truthy
         end
 
 

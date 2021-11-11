@@ -17,6 +17,11 @@ class Person
         @account == nil ? missing_account : deposit_amount(amount)
     end
 
+    def withdraw(amount, pin_code, account, atm)
+        @account.balance -= amount
+        @cash += amount
+    end
+
     private
 
     def missing_name
