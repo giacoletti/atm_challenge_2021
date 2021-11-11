@@ -81,6 +81,12 @@ describe Person do
             expect(subject.cash).to eq 100
         end
 
+        it 'is expected to raise error if trying to withdraw without available funds in ATM' do
+            allow(atm).to receive(:funds).and_return(5)
+            command = lambda { subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm) } 
+            expect { command.call }.to raise_error 'Insufficient funds in ATM'
+        end
+
     end
 
     describe 'can not manage funds if no account has been created' do
