@@ -6,7 +6,7 @@ describe Person do
     
     it 'is expected to have a :name on initialize' do
         expect(subject.name).not_to be nil
-        expect(subject.name).to eq :name => 'Mathias'
+        expect(subject.name).to eq 'Mathias'
     end
     
     it 'is expected to raise an error if no name is set' do
@@ -81,10 +81,15 @@ describe Person do
             expect(subject.cash).to eq 100
         end
 
-        it 'is expected to raise error if trying to withdraw without available funds in ATM' do
+        it 'is expected to raise an error if trying to withdraw without available funds in ATM' do
             allow(atm).to receive(:funds).and_return(5)
             command = lambda { subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm) } 
             expect { command.call }.to raise_error 'Insufficient funds in ATM'
+        end
+
+        it 'is expected to raise an error if no pin code is passed to the withdraw method' do
+            command = lambda { subject.withdraw(amount: 100, account: subject.account, atm: atm) }
+            expect { command.call }.to raise_error 'Pin code is required'
         end
 
     end
