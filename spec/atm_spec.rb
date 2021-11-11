@@ -104,5 +104,15 @@ describe Atm do
         expect(subject.withdraw(6, '1234', account)).to eq expected_output
     end
 
+    it 'is expected to reject if amount is not divisible by 5' do
+
+        expected_output = { 
+            status: false,
+            message: 'Denominator not available', 
+            date: Date.today 
+        }
+        expect(subject.withdraw(6, '1234', account)).to eq expected_output
+    end
+
 end
 

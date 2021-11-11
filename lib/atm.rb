@@ -35,6 +35,9 @@ class Atm
         when account_deactivated?(account.account_status)
             { status: false, message: 'account disabled', date: Date.today }
 
+        when denominator_missing?(amount)
+            { status: false, message: 'Denominator not available', date: Date.today }
+
         else
             # if it's not, we preform the transaction
             perform_transaction(amount,account)
@@ -88,6 +91,10 @@ class Atm
             end
         end
         bills
+    end
+
+    def denominator_missing?(amount)
+        amount % 5 != 0
     end
 
 end
