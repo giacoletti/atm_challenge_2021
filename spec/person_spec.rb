@@ -3,12 +3,12 @@ require './lib/person.rb'
 describe Person do
     
     subject { described_class.new(name: 'Mathias') }
-
+    
     it 'is expected to have a :name on initialize' do
         expect(subject.name).not_to be nil
         expect(subject.name).to eq :name => 'Mathias'
     end
-
+    
     it 'is expected to raise an error if no name is set' do
         expect { described_class.new }.to raise_error 'A name is required'
     end
@@ -49,6 +49,16 @@ describe Person do
             expect(subject.deposit(100)).to be_truthy
             expect(subject.account.balance).to eq 100
         end
+
+        it 'is expected to add funds to the account balance - deducted from cash' do
+            subject.cash = 100
+            expect(subject.cash).to eq 100
+            subject.deposit(100)
+            expect(subject.account.balance).to eq 100
+            expect(subject.cash).to eq 0
+
+        end
+
 
     end
 
