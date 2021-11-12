@@ -52,7 +52,7 @@ Inside ".rspec" file make sure you have the flaggs:
 
 ## Acknowledgments
 
-## Updates/Improvment plans
+## Updates/Improvement plans
 
 The code, at this stage, does not take into account the fact that either the balance of the account or the person using the ATM can end up with negative money. witch is obviously nonsence. 
 In later updates we will need to make sure that this is not the case. 
@@ -67,3 +67,4 @@ This will have to be implemented at a later stage.
 
 ## License
 
+The software is available as open source under the terms of the [MIT License] (https://opensource.org/licenses/MIT).
