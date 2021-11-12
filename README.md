@@ -27,14 +27,15 @@ Inside ".rspec" file make sure you have the flaggs:
  
  now you can create a person following the syntax: 
  
-> person = Person.new ({name: "Mathias"})
-> => #<Person:0x0000563980776e28 @name="Mathias", @cash=0> 
-> person.create_account
-> => #<Account:0x000056398076a768 @pin_code=8948, @exp_date="11/26", @account_status=:active, @balance=0, @owner="Mathias"> 
-> person.deposit(5000)
-> => -5000 
-> person.account
-> => #<Account:0x000056398076a768 @pin_code=8948, @exp_date="11/26", @account_status=:active, @balance=5000, @owner="Mathias"> 
+> ```ruby 
+> person = Person.new ({name: "Mathias"})```
+> ```ruby 
+> person.create_account```
+> ```ruby 
+> person.deposit(5000)```
+ > ```ruby 
+> person.account```
+
 
  This is a simple example of us instantiating a person "Mathias", and that person creating an account, and depositing 5000.
  those 5000 will show up in the list of attributes once you type person.account.
