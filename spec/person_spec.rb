@@ -71,14 +71,31 @@ describe Person do
             expect { command.call }.to raise_error 'An ATM is required'
         end
 
-        it 'is expected to add funds to cash and deduct from the account balance on withdraw' do
-            subject.cash = 100
-            subject.deposit(100)
-            expect(subject.account.balance).to eq 100
-            expect(subject.cash).to eq 0
-            subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm)
-            expect(subject.account.balance).to eq 0
-            expect(subject.cash).to eq 100
+        describe 'can add funds to cash and deduct from the account balance on withdraw' do
+            
+            before do
+                subject.cash = 100
+                subject.deposit(100)
+            end
+            
+            it 'is expected to have the account balance of 100 after deposit of 100' do
+                expect(subject.account.balance).to eq 100
+            end
+
+            it 'is expected to have cash value of 0 after deposit of 100' do
+                expect(subject.cash).to eq 0 
+            end
+
+            it 'is expected to have account balance of 0 after withdrawal of 100' do
+                subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm)
+                expect(subject.account.balance).to eq 0
+            end
+
+            it 'is expected to have cash value of 100 after withdrawal of 100' do
+                subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm)
+                expect(subject.cash).to eq 100
+            end
+
         end
 
         it 'is expected to raise an error if trying to withdraw without available funds in ATM' do
