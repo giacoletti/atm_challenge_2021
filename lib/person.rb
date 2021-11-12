@@ -1,4 +1,4 @@
-require './account.rb'
+require './lib/account.rb'
 
 class Person
     
@@ -24,8 +24,13 @@ class Person
             missing_account
         elsif pin_code_missing?(args[:pin])
             missing_pin_code
+        elsif insufficient_funds_in_atm?(args[:atm], args[:amount])
+            insufficient_funds
+        elsif insufficient_balance?(@account.balance, args[:amount])
+            insufficient_account_balance
         else
-            withdraw_amount(args)
+            response = args[:atm].withdraw(args[:amount], args[:pin], args[:account])
+            response[:status] == true ? add_cash(args[:amount]) : response
         end
     end
 
@@ -45,6 +50,14 @@ class Person
 
     def missing_pin_code
         raise 'Pin code is required'
+    end
+
+    def insufficient_funds
+        raise 'Insufficient funds in ATM'
+    end
+
+    def insufficient_account_balance
+        raise 'Insufficient account balance'
     end
 
     def set_name(name)
@@ -68,13 +81,16 @@ class Person
         pin_code == nil
     end
 
-    def withdraw_amount(args)
-        if args[:atm].funds < args[:amount]
-            raise 'Insufficient funds in ATM'
-        else
-            @account.balance -= args[:amount]
-            @cash += args[:amount]
-        end
+    def insufficient_funds_in_atm?(atm, amount)
+        atm.funds < amount
+    end
+
+    def insufficient_balance?(balance, amount)
+        balance < amount
+    end
+
+    def add_cash(amount)
+        @cash += amount
     end
 
 end

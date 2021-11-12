@@ -1,4 +1,5 @@
 require './lib/person.rb'
+require './lib/atm.rb'
 
 describe Person do
     
@@ -38,7 +39,7 @@ describe Person do
     end
 
     describe 'can manage funds if an account has been created' do
-        let(:atm) { instance_double('Atm', funds: 1000) }
+        let(:atm) { Atm.new }
         # As a Person with a bank account,
         # in order to be able to put my funds in the account,
         # I would like to be able to make a deposit
@@ -62,6 +63,7 @@ describe Person do
         end
 
         it 'is expected to be able to withdraw funds' do
+            subject.account.balance = 500
             command = lambda { subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm) }    
             expect(command.call).to be_truthy
         end
@@ -99,7 +101,7 @@ describe Person do
         end
 
         it 'is expected to raise an error if trying to withdraw without available funds in ATM' do
-            allow(atm).to receive(:funds).and_return(5)
+            atm.funds = 5
             command = lambda { subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm) } 
             expect { command.call }.to raise_error 'Insufficient funds in ATM'
         end
@@ -107,6 +109,11 @@ describe Person do
         it 'is expected to raise an error if no pin code is passed to the withdraw method' do
             command = lambda { subject.withdraw(amount: 100, account: subject.account, atm: atm) }
             expect { command.call }.to raise_error 'Pin code is required'
+        end
+
+        it 'is expected to raise an error if account balance is insufficient' do
+            command = lambda { subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm) }    
+            expect { command.call }.to raise_error 'Insufficient account balance'
         end
 
     end
