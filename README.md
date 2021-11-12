@@ -28,13 +28,17 @@ Inside ".rspec" file make sure you have the flaggs:
  now you can create a person following the syntax: 
  
 > ```ruby 
-> person = Person.new ({name: "Mathias"})```
+> person = Person.new ({name: "Mathias"})
+
 > ```ruby 
-> person.create_account```
+> person.create_account
+
 > ```ruby 
-> person.deposit(5000)```
+> person.deposit(5000)
+
  > ```ruby 
-> person.account```
+> person.account
+
 
 
  This is a simple example of us instantiating a person "Mathias", and that person creating an account, and depositing 5000.
