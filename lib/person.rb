@@ -1,4 +1,4 @@
-require 'account.rb'
+require './account.rb'
 
 class Person
     
